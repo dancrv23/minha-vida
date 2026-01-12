@@ -1,212 +1,201 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Surpresa Romântica</title>
-<style>
-  /* Fundo rosa pastel com gradiente */
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(180deg, #ffd6e8, #ffeaf3);
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
-  }
-
-  /* Corações animados flutuando */
-  .heart {
-    position: absolute;
-    font-size: 24px;
-    animation: float 6s linear infinite;
-    opacity: 0.7;
-    user-select: none;
-    pointer-events: none;
-  }
-  @keyframes float {
-    0% {
-      transform: translateY(100vh) scale(0.5);
-      opacity: 0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surpresa Romântica</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
     }
-    50% {
-      opacity: 1;
+
+    body {
+      background-color: #FFD1DC; /* Rosa pastel */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
     }
-    100% {
-      transform: translateY(-10vh) scale(1);
-      opacity: 0;
+
+    /* Corações flutuantes */
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #FFB6C1;
+      transform: rotate(-45deg);
+      animation: float 5s linear infinite;
+      opacity: 0.8;
     }
-  }
 
-  /* Caixa central grande */
-  .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff0f6;
-    border-radius: 20px;
-    padding: 30px 20px;
-    width: 90%;
-    max-width: 420px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    user-select: none;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-    color: #d63384;
-    margin-bottom: 30px;
-  }
-
-  button {
-    width: 80%;
-    padding: 16px;
-    margin: 12px 0;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    position: relative;
-    user-select: none;
-    transition: background-color 0.3s ease;
-  }
-
-  button:active {
-    transform: scale(0.95);
-  }
-
-  .yes {
-    background: #ff85c2;
-    color: white;
-  }
-
-  .yes:hover,
-  .yes:focus {
-    background: #e664a8;
-  }
-
-  .no {
-    background: #ffc2d9;
-    color: #8b0038;
-  }
-
-  .no:hover,
-  .no:focus {
-    background: #ffadc6;
-  }
-
-  .message {
-    font-size: 1.6rem;
-    margin-top: 20px;
-    color: #d63384;
-    min-height: 2.5rem;
-  }
-
-  /* Fogos de artifício */
-  .firework {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    animation: explode 1s ease-out forwards;
-    pointer-events: none;
-  }
-  @keyframes explode {
-    from {
-      transform: scale(0);
-      opacity: 1;
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #FFB6C1;
+      border-radius: 50%;
     }
-    to {
-      transform: scale(15);
-      opacity: 0;
+
+    .heart::before {
+      top: -15px;
+      left: 0;
     }
-  }
-</style>
+
+    .heart::after {
+      top: 0;
+      left: 15px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(-45deg); opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(-45deg); opacity: 0; }
+    }
+
+    /* Caixa central */
+    .box {
+      position: relative;
+      background-color: #fff0f5;
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    .box h1 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      color: #ff69b4;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .btn-sim {
+      background-color: #ff69b4;
+    }
+
+    .btn-nao {
+      background-color: #ff1493;
+      position: relative;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Mensagem após clique */
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ff1493;
+      font-weight: bold;
+    }
+
+    /* Fogos de artifício simples */
+    .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: yellow;
+      animation: explode 0.8s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(1) translate(0,0); opacity: 1; }
+      100% { transform: scale(2) translate(var(--x), var(--y)); opacity: 0; }
+    }
+
+  </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>pra melhorar o dia da minha mulher,<br>quer jogar stray comigo? 💕</h1>
+  <div class="box">
+    <h1>Pra melhorar o dia da minha mulher, quer jogar Stray comigo?</h1>
+    <button class="btn btn-sim">SIM</button>
+    <button class="btn btn-nao">NÃO</button>
+    <div class="message"></div>
+  </div>
 
-  <button class="yes" id="btnSim">SIM 💖</button>
-  <button class="no" id="btnNao">NÃO 😒</button>
+  <script>
+    const btnSim = document.querySelector('.btn-sim');
+    const btnNao = document.querySelector('.btn-nao');
+    const message = document.querySelector('.message');
+    let naoFugiu = false;
 
-  <div class="message" id="message"></div>
-</div>
-
-<script>
-  // Criar 25 corações flutuantes
-  for (let i = 0; i < 25; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.textContent = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
-    heart.style.animationDelay = (Math.random() * 6) + "s";
-    document.body.appendChild(heart);
-  }
-
-  const btnSim = document.getElementById("btnSim");
-  const btnNao = document.getElementById("btnNao");
-  const message = document.getElementById("message");
-
-  // Função do botão SIM
-  function respostaSim() {
-    message.textContent = "te amo mais que tudo 💖";
-
-    // Criar fogos de artifício coloridos
-    for (let i = 0; i < 16; i++) {
-      const fw = document.createElement("div");
-      fw.className = "firework";
-      fw.style.left = Math.random() * window.innerWidth + "px";
-      fw.style.top = Math.random() * window.innerHeight + "px";
-      fw.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
-      document.body.appendChild(fw);
-
-      setTimeout(() => fw.remove(), 1000);
-    }
-  }
-
-  btnSim.addEventListener("click", respostaSim);
-
-  // Função do botão NÃO que foge
-  function fugirNao() {
-    const containerRect = document.querySelector(".container").getBoundingClientRect();
-
-    // Posicionar dentro da tela, evitando sair do container visível
-    const maxLeft = window.innerWidth - btnNao.offsetWidth - 20;
-    const maxTop = window.innerHeight - btnNao.offsetHeight - 20;
-
-    let newLeft = Math.random() * maxLeft;
-    let newTop = Math.random() * maxTop;
-
-    // Evita que fique muito perto do centro (onde está a caixa)
-    // Pra não sumir da tela, mas ainda fugir
-    if (newLeft > containerRect.left - btnNao.offsetWidth && newLeft < containerRect.right) {
-      newLeft += btnNao.offsetWidth * 2;
-      if (newLeft > maxLeft) newLeft = maxLeft;
-    }
-    if (newTop > containerRect.top - btnNao.offsetHeight && newTop < containerRect.bottom) {
-      newTop += btnNao.offsetHeight * 2;
-      if (newTop > maxTop) newTop = maxTop;
+    // Função para criar fogos de artifício
+    function fireworkEffect(x, y) {
+      for (let i = 0; i < 20; i++) {
+        const fw = document.createElement('div');
+        fw.classList.add('firework');
+        fw.style.left = `${x}px`;
+        fw.style.top = `${y}px`;
+        fw.style.setProperty('--x', `${(Math.random()-0.5)*200}px`);
+        fw.style.setProperty('--y', `${(Math.random()-0.5)*200}px`);
+        document.body.appendChild(fw);
+        setTimeout(() => fw.remove(), 800);
+      }
     }
 
-    btnNao.style.position = "fixed";
-    btnNao.style.left = newLeft + "px";
-    btnNao.style.top = newTop + "px";
+    // Evento SIM
+    btnSim.addEventListener('click', () => {
+      message.textContent = 'Te amo mais que tudo ❤️';
+      const rect = btnSim.getBoundingClientRect();
+      fireworkEffect(rect.left + rect.width/2, rect.top + rect.height/2);
+    });
 
-    message.textContent = "resposta errada, tente de novo 👎";
-  }
+    // Evento NÃO com "fuga" na primeira vez
+    btnNao.addEventListener('mouseenter', () => {
+      if (!naoFugiu) {
+        const box = document.querySelector('.box');
+        const maxX = box.clientWidth - btnNao.offsetWidth;
+        const maxY = box.clientHeight - btnNao.offsetHeight;
+        const randX = Math.random() * maxX;
+        const randY = Math.random() * maxY;
+        btnNao.style.transform = `translate(${randX}px, ${randY}px)`;
+        naoFugiu = true;
+      }
+    });
 
-  // Eventos para botão NÃO: mouse e toque mobile
-  btnNao.addEventListener("mouseenter", fugirNao);
-  btnNao.addEventListener("touchstart", function(e) {
-    e.preventDefault(); // evita clique normal no mobile
-    fugirNao();
-  });
-</script>
+    btnNao.addEventListener('click', () => {
+      message.textContent = 'Resposta errada, tente de novo 👎';
+    });
+
+    // Gerar corações aleatórios
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = 4 + Math.random()*4 + 's';
+      heart.style.width = 20 + Math.random()*20 + 'px';
+      heart.style.height = heart.style.width;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    setInterval(createHeart, 300);
+
+  </script>
 
 </body>
 </html>
