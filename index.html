@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surpresa para minha mulher</title>
+    <style>
+        /* ===== Fundo e cores ===== */
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #ffd1dc; /* rosa pastel */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* ===== Corações flutuantes ===== */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b81;
+            transform: rotate(-45deg);
+            animation: float 6s linear infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b81;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ===== Caixa central ===== */
+        .box {
+            background-color: #ffe4ec;
+            padding: 40px 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+            z-index: 10;
+            position: relative;
+        }
+
+        .box h1 {
+            font-size: 24px;
+            color: #d6336c;
+            margin-bottom: 30px;
+        }
+
+        /* ===== Botões ===== */
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-sim {
+            background-color: #ff6b81;
+            color: white;
+        }
+
+        .btn-nao {
+            background-color: #f1c0c9;
+            color: #d6336c;
+        }
+
+        /* ===== Fogos de artifício ===== */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(4) translate(var(--x), var(--y)); opacity: 0; }
+        }
+
+        /* ===== Mensagens ===== */
+        .message {
+            font-size: 22px;
+            color: #d6336c;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Pra melhorar o dia da minha mulher, quer jogar Stray comigo?</h1>
+        <button class="btn btn-sim" id="btnSim">Sim</button>
+        <button class="btn btn-nao" id="btnNao">Não</button>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        // ===== Criar corações =====
+        for(let i=0; i<30; i++){
+            let heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+            heart.style.width = heart.style.height = (15 + Math.random() * 20) + 'px';
+            document.body.appendChild(heart);
+        }
+
+        const btnSim = document.getElementById('btnSim');
+        const btnNao = document.getElementById('btnNao');
+        const message = document.getElementById('message');
+        let naoFugiu = false; // para o botão não fugir apenas na primeira tentativa
+
+        // ===== Função para criar fogos =====
+        function criarFogos(x, y){
+            for(let i=0; i<30; i++){
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                let angle = Math.random() * 2 * Math.PI;
+                let distance = 50 + Math.random() * 50;
+                firework.style.setProperty('--x', Math.cos(angle) * distance + 'px');
+                firework.style.setProperty('--y', Math.sin(angle) * distance + 'px');
+                firework.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+
+        // ===== Botão Sim =====
+        btnSim.addEventListener('click', (e) => {
+            const rect = e.target.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            criarFogos(x, y);
+            message.textContent = "Te amo mais que tudo ❤️";
+            message.classList.add('show');
+        });
+
+        // ===== Botão Não =====
+        btnNao.addEventListener('mouseenter', () => {
+            if(!naoFugiu){
+                const x = Math.random() * (window.innerWidth - btnNao.offsetWidth);
+                const y = Math.random() * (window.innerHeight - btnNao.offsetHeight);
+                btnNao.style.position = 'absolute';
+                btnNao.style.left = x + 'px';
+                btnNao.style.top = y + 'px';
+                naoFugiu = true;
+            }
+        });
+
+        btnNao.addEventListener('click', () => {
+            message.textContent = "Resposta errada, tente de novo 👎";
+            message.classList.add('show');
+        });
+    </script>
+</body>
+</html>
