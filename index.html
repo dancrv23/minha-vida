@@ -138,109 +138,6 @@
         document.getElementById("message").innerHTML =
             "resposta errada, tente de novo 👎";
     }
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surpresa 💖</title>
-
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(180deg, #ffd6e8, #ffeaf3);
-        overflow: hidden;
-    }
-
-    .heart {
-        position: absolute;
-        font-size: 24px;
-        animation: float 6s linear infinite;
-        opacity: 0.7;
-    }
-
-    @keyframes float {
-        0% { transform: translateY(100vh); opacity: 0; }
-        50% { opacity: 1; }
-        100% { transform: translateY(-10vh); opacity: 0; }
-    }
-
-    .container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff0f6;
-        border-radius: 20px;
-        padding: 30px 20px;
-        width: 90%;
-        max-width: 420px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-
-    h1 {
-        font-size: 1.6rem;
-        color: #d63384;
-        margin-bottom: 30px;
-    }
-
-    button {
-        width: 80%;
-        padding: 16px;
-        margin: 12px 0;
-        font-size: 1.5rem;
-        border: none;
-        border-radius: 16px;
-        cursor: pointer;
-        position: relative;
-    }
-
-    .yes {
-        background: #ff85c2;
-        color: white;
-    }
-
-    .no {
-        background: #ffc2d9;
-        color: #8b0038;
-    }
-
-    .message {
-        font-size: 1.6rem;
-        margin-top: 20px;
-        color: #d63384;
-    }
-
-    .firework {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        animation: explode 1s ease-out forwards;
-    }
-
-    @keyframes explode {
-        from { transform: scale(0); opacity: 1; }
-        to { transform: scale(15); opacity: 0; }
-    }
-</style>
-</head>
-<body>
-
-<div class="container">
-    <h1>pra melhorar o dia da minha mulher,<br>quer jogar stray comigo? 💕</h1>
-
-    <button class="yes" onclick="respostaSim()">SIM 💖</button>
-    <button class="no" id="btnNao">NÃO 😒</button>
-
-    <div class="message" id="message"></div>
-</div>
 
 <script>
     // Corações
@@ -253,11 +150,12 @@
         document.body.appendChild(heart);
     }
 
+    // SIM funciona normal
     function respostaSim() {
         const msg = document.getElementById("message");
         msg.innerHTML = "te amo mais que tudo 💖";
 
-        for (let i = 0; i < 14; i++) {
+        for (let i = 0; i < 16; i++) {
             let fw = document.createElement("div");
             fw.className = "firework";
             fw.style.left = Math.random() * 100 + "vw";
@@ -269,12 +167,10 @@
         }
     }
 
-    // Botão NÃO fugindo
+    // NÃO foge no mobile e desktop
     const btnNao = document.getElementById("btnNao");
-    btnNao.addEventListener("touchstart", fugir);
-    btnNao.addEventListener("mouseover", fugir);
 
-    function fugir() {
+    function fugirNao() {
         btnNao.style.position = "absolute";
         btnNao.style.left = Math.random() * 60 + 20 + "%";
         btnNao.style.top = Math.random() * 60 + 20 + "%";
@@ -282,7 +178,15 @@
         document.getElementById("message").innerHTML =
             "resposta errada, tente de novo 👎";
     }
+
+    // Eventos compatíveis com celular
+    btnNao.addEventListener("mouseenter", fugirNao);
+    btnNao.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+        fugirNao();
+    });
 </script>
 
 </body>
 </html>
+
